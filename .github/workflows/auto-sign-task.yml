@@ -9,7 +9,7 @@ on:
     - cron: "31 0,10 * * *"
 
 jobs:
-  run-sport-editor:
+  auto-sign-task:
     runs-on: ubuntu-latest
 
     strategy:
