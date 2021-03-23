@@ -1,7 +1,7 @@
 require("./index")
 const express = require('express');
 const schedule = require('node-schedule');
-global.sign_config = require("./auto_sign.json")
+global.sign_config = require("./userList.json")
 let d_2021 = require("./data/2021.json")
 
 
