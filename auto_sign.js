@@ -3,6 +3,7 @@ const axios = require("axios")
 const express = require('express');
 const schedule = require('node-schedule');
 let sign_config = require("./auto_sign.json")
+let d_2021 = require("./data/2021.json")
 
 
 gl.info(" === script start ===");
@@ -17,8 +18,18 @@ const Holiday = {
     },
     isOff() {
         //判断今天是否休假 todo
-
-        return this.isWeekend();
+        //数据源于https://github.com/tangyan85/GetHolidays
+        //需要将非工作日（包括节假日（ day_type = 0）、周末（只要是周末，不管是否调休 day_type = 2））与工作日（ day_type = 1）区分开来，写入json文件
+        let now = new Date();
+        let year = now.getFullYear() + "";
+        let month = (now.getMonth() + 1) < 10 ? "0" + (now.getMonth() + 1) : (now.getMonth() + 1) + "";
+        let day = now.getDate() < 10 ? "0" + now.getDate() : "" + now.getDate();
+        let dayObj = d_2021[year + month][year + month + day];
+        if (dayObj !== 1) {
+            gl.info("今日为节假日");
+            return true;
+        }
+        return false;
     },
     getWeek() {
         return new Date().getDay() + (4 - new Date(1).getDay()); //加上偏移量
@@ -77,8 +88,6 @@ const Sign = {
     }
 }
 Sign.start();
-
-
 
 
 //api
