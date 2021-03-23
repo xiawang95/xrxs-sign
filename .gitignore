@@ -24,3 +24,4 @@ pnpm-debug.log*
 
 # npm
 package-lock.json
+userList.json
