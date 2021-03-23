@@ -39,13 +39,13 @@ const Holiday = {
         return week === 0 || week === 6;
     },
     start() {
-        schedule.scheduleJob(this.cron, () => {
+        schedule.scheduleJob(this.scheduleConfig.cron, () => {
             this.update();
         });
         gl.info("启用更新假日调度（" + JSON.stringify(this.scheduleConfig) + "）");
     }
 }
-Holiday.start();
+//Holiday.start();
 
 const Sign = {
     sign(now = new Date()) {
