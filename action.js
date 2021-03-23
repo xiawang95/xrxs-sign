@@ -1,7 +1,7 @@
 require("./index")
 const express = require('express');
 const schedule = require('node-schedule');
-global.sign_config = require("./userList.json")
+global.sign_config = require("./data/sign_config.json")
 let d_2021 = require("./data/2021.json")
 
 
@@ -60,7 +60,7 @@ const Sign = {
             if (status === 200) {
                 if (res.data) {
                     let data = res.data;
-                    if (data.message == "成功" && /^\d+:\d+$/.test(data?.data?.clockTime || "")) {
+                    if (data.message == "成功") {
                         gl.info(`${user.name}打卡成功！ 时间为= ${data.data.clockTime}`);
                         return;
                     }

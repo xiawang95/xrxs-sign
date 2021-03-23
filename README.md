@@ -38,6 +38,10 @@ git clone https://github.com/liaoxiangyun/xrxs-sign.git
 cd xrxs-sign
 npm install
 npm run run
+
+或者使用forever
+npm install -g forever
+forever start run.js
 ```
 
 

@@ -39,7 +39,7 @@ App({
     },
     httpPostReq: function(t, a, e) {
         a = getApp().getHttpParamData(t, a);
-        getApp().httpUtil.fetchPost(getApp().globalData.rootUrl + t, a).then(r => e(r?.status, r));
+        getApp().httpUtil.fetchPost(getApp().globalData.rootUrl + t, a).then(r => e(r.status, r));
     },
     getHttpParamData: function(t, a) {
         let e = {
