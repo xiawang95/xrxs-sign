@@ -1,0 +1,14 @@
+{
+    "pages": [
+        "pages/index/index",
+        "pages/company/company"
+    ],
+    "window": {
+        "backgroundColor": "#F8F8F8",
+        "backgroundTextStyle": "light",
+        "navigationBarBackgroundColor": "#F8F8F8",
+        "navigationBarTitleText": "薪人薪事打卡",
+        "navigationBarTextStyle": "black",
+        "navigationStyle": "custom"
+    }
+}

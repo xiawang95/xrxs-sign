@@ -1,0 +1,23 @@
+{
+  "name": "applet",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "run": "node auto_sign.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "express": "^4.17.1",
+    "format-date-time": "^0.3.3",
+    "node-schedule": "^2.0.0",
+    "qs": "^6.10.0"
+  },
+  "devDependencies": {
+    "form-data": "^4.0.0"
+  }
+}
