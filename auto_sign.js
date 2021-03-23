@@ -4,33 +4,12 @@ const express = require('express');
 const schedule = require('node-schedule');
 let sign_config = require("./auto_sign.json")
 
-const server = express();
-const port = 3000;
-
-server.get('/logs', (req, res) => {
-    res.send(global.logs);
-})
-server.get('/updateConfig', (req, res) => {
-    axios.get("https://raw.githubusercontent.com/liaoxiangyun/xrxs-sign/master/auto_sign.json", {}).then(r => {
-        if (r.status === 200 && typeof r.data == "object") {
-            if (r.data.version <= sign_config.version) return;
-            sign_config = r.data;
-            gl.info("更新配置成功！" + JSON.stringify(r.data))
-            return;
-        }
-    })
-    res.send("更新配置...");
-})
-server.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`);
-})
-
 
 gl.info(" === script start ===");
 
 //放假日管理
 const Holiday = {
-    cron: "0 0 0 * * * *", //每月更新
+    scheduleConfig: {cron: "0 0 0 * * * *", desc: ""}, //每月更新
     data: {},
     update() {
         // todo
@@ -52,6 +31,7 @@ const Holiday = {
         schedule.scheduleJob(this.cron, () => {
             this.update();
         });
+        gl.info("启用更新假日调度（" + JSON.stringify(this.scheduleConfig) + "）");
     }
 }
 Holiday.start();
@@ -96,7 +76,31 @@ const Sign = {
         this.signSchedule = schedule_list;
     }
 }
-
 Sign.start();
+
+
+
+
+//api
+const server = express();
+const port = 3000;
+
+server.get('/logs', (req, res) => {
+    res.send(global.logs);
+})
+server.get('/updateConfig', (req, res) => {
+    axios.get("https://raw.githubusercontent.com/liaoxiangyun/xrxs-sign/master/auto_sign.json", {}).then(r => {
+        if (r.status === 200 && typeof r.data == "object") {
+            if (r.data.version <= sign_config.version) return;
+            sign_config = r.data;
+            gl.info("更新配置成功！" + JSON.stringify(r.data))
+            return;
+        }
+    })
+    res.send("更新配置...");
+})
+server.listen(port, () => {
+    console.log(`Example app listening at http://localhost:${port}`);
+})
 
 
