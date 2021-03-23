@@ -216,7 +216,7 @@ Page({
         let t = this;
         this.showCustomLoading();
         let e = {
-            aMap: a.globalData.aMap,
+            aMap: user.location || a.globalData.aMap,
             mac: a.globalData.mac,
             token: user.token
         };

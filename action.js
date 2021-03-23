@@ -1,8 +1,7 @@
 require("./index")
-const axios = require("axios")
 const express = require('express');
 const schedule = require('node-schedule');
-let sign_config = require("./auto_sign.json")
+global.sign_config = require("./auto_sign.json")
 let d_2021 = require("./data/2021.json")
 
 
@@ -48,28 +47,35 @@ const Holiday = {
 //Holiday.start();
 
 const Sign = {
-    sign(now = new Date()) {
-        if (Holiday.isOff()) {
+    sign(user = {}) {
+        if (!user.name || !user.token || !user.location) {
+            gl.err("配置不能为空！")
             return;
         }
+        if (Holiday.isOff()) {
+            gl.info("节假日不打卡！")
+            return;
+        }
+        __page.doSignRequest(user, (status, res) => {
+            if (status === 200) {
+                if (res.data) {
+                    let data = res.data;
+                    if (data.message == "成功" && /^\d+:\d+$/.test(data?.data?.clockTime || "")) {
+                        gl.info(`${user.name}打卡成功！ 时间为= ${data.data.clockTime}`);
+                        return;
+                    }
+                    gl.err(data);
+                }
+            } else {
+                gl.err(res);
+            }
+        })
+    },
+    foreachSign() {
         //打卡
         for (let i = 0; i < sign_config.userList.length; i++) {
             const user = sign_config.userList[i];
-            console.log("**************")
-            __page.doSignRequest(user, (status, res) => {
-                if (status === 200) {
-                    if (res.data) {
-                        let data = res.data;
-                        if (data.message == "成功" && /^\d+:\d+$/.test(data?.data?.clockTime || "")) {
-                            gl.info(`${user.name}打卡成功！ 时间为= ${data.data.clockTime}`);
-                            return;
-                        }
-                        gl.err(data);
-                    }
-                } else {
-                    gl.err(res);
-                }
-            })
+            this.sign(user);
         }
     },
     scheduleConfig: [
@@ -82,34 +88,14 @@ const Sign = {
         let schedule_list = [];
         this.scheduleConfig.forEach(value => {
             gl.info("启用打卡调度（" + JSON.stringify(value) + "）");
-            schedule_list.push(schedule.scheduleJob(value.cron, this.sign));
+            schedule_list.push(schedule.scheduleJob(value.cron, this.foreachSign));
         })
         this.signSchedule = schedule_list;
     }
 }
-Sign.start();
 
 
-//api
-const server = express();
-const port = 3000;
-
-server.get('/logs', (req, res) => {
-    res.send(global.logs);
-})
-server.get('/updateConfig', (req, res) => {
-    axios.get("https://raw.githubusercontent.com/liaoxiangyun/xrxs-sign/master/auto_sign.json", {}).then(r => {
-        if (r.status === 200 && typeof r.data == "object") {
-            if (r.data.version <= sign_config.version) return;
-            sign_config = r.data;
-            gl.info("更新配置成功！" + JSON.stringify(r.data))
-            return;
-        }
-    })
-    res.send("更新配置...");
-})
-server.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`);
-})
-
-
+module.exports = {
+    sign: Sign,
+    holiday: Holiday,
+}
