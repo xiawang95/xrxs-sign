@@ -16,19 +16,22 @@ const Holiday = {
 
     },
     isOff() {
-        //判断今天是否休假 todo
+        //判断今天是否休假
         //数据源于https://github.com/tangyan85/GetHolidays
         //需要将非工作日（包括节假日（ day_type = 0）、周末（只要是周末，不管是否调休 day_type = 2））与工作日（ day_type = 1）区分开来，写入json文件
         let now = new Date();
         let year = now.getFullYear() + "";
         let month = (now.getMonth() + 1) < 10 ? "0" + (now.getMonth() + 1) : (now.getMonth() + 1) + "";
         let day = now.getDate() < 10 ? "0" + now.getDate() : "" + now.getDate();
-        let dayObj = d_2021[year + month][year + month + day];
-        if (dayObj !== 1) {
-            gl.info("今日为节假日");
-            return true;
+        if (year === "2021") {
+            let dayObj = d_2021[year + month][year + month + day];
+            if (dayObj !== 1) {
+                gl.info("今日为节假日");
+                return true;
+            }
+        } else {
+            return this.isWeekend();
         }
-        return false;
     },
     getWeek() {
         return new Date().getDay() + (4 - new Date(1).getDay()); //加上偏移量
@@ -75,12 +78,12 @@ const Sign = {
         //打卡
         for (let i = 0; i < sign_config.userList.length; i++) {
             const user = sign_config.userList[i];
-            this.sign(user);
+            Sign.sign(user);
         }
     },
     scheduleConfig: [
-        {cron: "0 0 9 * * * *", desc: "上班"},
-        {cron: "0 31 18 * * * *", desc: "下班"},
+        {cron: "0 19 9 * * *", desc: "上班"},
+        {cron: "0 52 18 * * *", desc: "下班"},
     ],
     signSchedule: [],
     start() {
@@ -99,3 +102,4 @@ module.exports = {
     sign: Sign,
     holiday: Holiday,
 }
+
