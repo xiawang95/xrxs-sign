@@ -33,9 +33,12 @@ global.gl = {
         console.log(msg);
         logs.unshift(msg.substring(0, msg.indexOf("\n") !== -1 ? msg.indexOf("\n") : msg.length));
     },
-    err: function (str) {
-        this.info("出错了： " + str, "ERR");
-        throw new Error(str);
+    err: function (msg) {
+        if(typeof msg == "object"){
+            msg = JSON.stringify(msg);
+        }
+        this.info("出错了： " + msg, "ERR");
+        throw new Error(msg);
     }
 }
 global.log = function (str = "") {
