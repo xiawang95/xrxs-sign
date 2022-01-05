@@ -19,7 +19,7 @@ const hook = (c, text) => {
 
 module.exports = {
     hooks(configs = [], text) {
-        gl.info(configs)
+        gl.info(JSON.stringify(configs))
         for (let c of configs) {
             try {
                 hook(c, text)
