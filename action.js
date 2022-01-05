@@ -68,7 +68,7 @@ const Sign = {
                         let text = `${user.name}打卡成功！ 时间为= ${data.data.clockTime}`
                         gl.info(text);
                         //webhook
-                        webhookUtil.hooks(user.webhook || [], text)
+                        webhookUtil.hooks(user.webhook, text)
                         return;
                     }
                     gl.err(data);

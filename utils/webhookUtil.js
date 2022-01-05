@@ -1,31 +1,22 @@
 let httpUtil = require("./httpUtil")
+let sckey = process.env.WEBHOOK_FTQQ_SCKEY
 
 //@see Server酱 https://sct.ftqq.com/login
 const ftqq = (sckey = "", text = "") => {
     //https://sc.ftqq.com/xx.send?text=text
+    gl.info("Server酱 webhook")
     let url = `https://sc.ftqq.com/${sckey}.send?text=${text}`
     httpUtil.fetchGet(url, {}).then((r) => {
         gl.info(r)
     })
 }
 
-const hook = (c, text) => {
-    let {type} = c;
-    if (type === "Server酱" && c.SCKEY) {
-        ftqq(c.SCKEY, text);
-    }
-}
-
 
 module.exports = {
-    hooks(configs = [], text) {
-        gl.info(JSON.stringify(configs))
-        for (let c of configs) {
-            try {
-                hook(c, text)
-            } catch (e) {
-                console.error(e)
-            }
+    hooks(enable = false, text) {
+        if (!enable) return;
+        if (sckey) {
+            ftqq(sckey, text)
         }
     }
 }
