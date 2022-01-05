@@ -21,6 +21,12 @@
 | SIGN_APPLET_TOKEN  | token                | xxxxxx              |
 | SIGN_LOCATION   | 经纬度      | 22.573494:114.059592:29.0              |
 
+## webhook
+
+| 环境变量                 | 说明                | 值                  | 链接    |
+| ------------------------ | ------------------- | ------------------- | ------------------- |
+| WEBHOOK_FTQQ_SCKEY   | SCKEY      | xxxxxxxxxx              | [Server酱](https://sct.ftqq.com/login)
+
 - 推荐使用 Node.js 12 及以上的运行/构建当前项目
 - 可选 Github Actions / 命令行 两种方式运行
 
