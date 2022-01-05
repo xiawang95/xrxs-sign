@@ -27,6 +27,8 @@
 | ------------------------ | ------------------- | ------------------- | ------------------- |
 | WEBHOOK_FTQQ_SCKEY   | SCKEY      | xxxxxxxxxx              | [Server酱](https://sct.ftqq.com/login)
 
+## 构建
+
 - 推荐使用 Node.js 12 及以上的运行/构建当前项目
 - 可选 Github Actions / 命令行 两种方式运行
 
