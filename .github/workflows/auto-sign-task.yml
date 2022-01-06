@@ -41,5 +41,6 @@ jobs:
           SIGN_APPLET_TOKEN: ${{secrets.SIGN_APPLET_TOKEN}}
           SIGN_LOCATION: ${{secrets.SIGN_LOCATION}}
           SIGN_JSON: ${{secrets.SIGN_JSON}}
+          WEBHOOK_FTQQ_SCKEY: ${{secrets.WEBHOOK_FTQQ_SCKEY}}
 
         run: npm run workflow

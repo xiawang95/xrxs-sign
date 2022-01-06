@@ -1,8 +1,9 @@
 require("./index")
 const express = require('express');
 const schedule = require('node-schedule');
+const webhookUtil = require('./utils/webhookUtil');
 global.sign_config = require("./data/sign_config.json")
-let d_2021 = require("./data/2021.json")
+let d_2022 = require("./data/2022.json")
 
 
 gl.info(" === script start ===");
@@ -23,8 +24,8 @@ const Holiday = {
         let year = now.getFullYear() + "";
         let month = (now.getMonth() + 1) < 10 ? "0" + (now.getMonth() + 1) : (now.getMonth() + 1) + "";
         let day = now.getDate() < 10 ? "0" + now.getDate() : "" + now.getDate();
-        if (year === "2021") {
-            let dayObj = d_2021[year + month][year + month + day];
+        if (year === "2022") {
+            let dayObj = d_2022[year + month][year + month + day];
             if (dayObj !== 1) {
                 gl.info("今日为节假日");
                 return true;
@@ -64,7 +65,10 @@ const Sign = {
                 if (res.data) {
                     let data = res.data;
                     if (data.message == "成功") {
-                        gl.info(`${user.name}打卡成功！ 时间为= ${data.data.clockTime}`);
+                        let text = `${user.name}打卡成功！ 时间为= ${data.data.clockTime}`
+                        gl.info(text);
+                        //webhook
+                        webhookUtil.hooks(user.webhook, text)
                         return;
                     }
                     gl.err(data);

@@ -10,7 +10,7 @@
 ## 实现功能
 
 - [x] 每日8:31/18:31自动请求打卡
-- [x] 自动判断节假日(2021年)，跳过打卡
+- [x] 自动判断节假日(2022年)，跳过打卡
 - [x] Github Action 运行
 
 ## 配置参数
@@ -20,6 +20,14 @@
 | SIGN_NAME  | 用户名              | 张三           |
 | SIGN_APPLET_TOKEN  | token                | xxxxxx              |
 | SIGN_LOCATION   | 经纬度      | 22.573494:114.059592:29.0              |
+
+## webhook
+
+| 环境变量                 | 说明                | 值                  | 链接    |
+| ------------------------ | ------------------- | ------------------- | ------------------- |
+| WEBHOOK_FTQQ_SCKEY   | SCKEY      | xxxxxxxxxx              | [Server酱](https://sct.ftqq.com/login)
+
+## 构建
 
 - 推荐使用 Node.js 12 及以上的运行/构建当前项目
 - 可选 Github Actions / 命令行 两种方式运行
